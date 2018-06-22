@@ -13,6 +13,49 @@ namespace Isen.meziane.Library
         public List<Node<T>> Children { get; set; }
         public int Depth { get; set; }
 
+        public void AddChildNode(Node<T> node)
+        {
+            var children = new Node<T>();
+            children.Parent = this;
+            Children.Add(children);
+        }
+
+        public void AddNodes(IEnumerable<Node<T>> nodeList)
+        {
+            foreach (var node in nodeList)
+            {
+                this.Children.Add(node);
+            }
+        }
+
+        public void RemoveChildNote(Guid id)
+        {
+            var i = 0;
+            foreach (var child in this.Children)
+            {
+                if (child.Id.Equals(id))
+                {
+                    this.Children.RemoveAt(i);
+                }
+
+                i++;
+            }
+        }
+
+        public void RemoveChildNode(Node<T> node)
+        {
+            var i = 0;
+            foreach (var child in this.Children)
+            {
+                if (child.Equals(node))
+                {
+                    this.Children.RemoveAt(i);
+                }
+
+                i++;
+            }
+        }
+
         
         //Rider auto-generate code
         public bool Equals(Node<T> other)
