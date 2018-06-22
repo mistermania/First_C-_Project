@@ -16,6 +16,16 @@ namespace Isen.meziane.Library
         List<Node<T>> Children { get; set; }
         
         int Depth { get; set; }
+
+        void AddChildNode(Node<T> node);
+
+        void AddNodes(IEnumerable<Node<T>> nodeList);
+        
+        void RemoveChildNote(Guid id);
+        void RemoveChildNote(Node<T> node);
+
+        Node<T> FindTraversing(Guid id);
+        Node<T> FindTraversing(Node<T> node);
     }
     
 }

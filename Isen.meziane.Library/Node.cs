@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Isen.meziane.Library
 {
@@ -12,6 +13,7 @@ namespace Isen.meziane.Library
         public Node<T> Parent { get; set; }
         public List<Node<T>> Children { get; set; }
         public int Depth { get; set; }
+        //end Rider auto-generate code
 
         public void AddChildNode(Node<T> node)
         {
@@ -33,7 +35,7 @@ namespace Isen.meziane.Library
             var i = 0;
             foreach (var child in this.Children)
             {
-                if (child.Id.Equals(id))
+                if (child.Id == id)
                 {
                     this.Children.RemoveAt(i);
                 }
@@ -42,7 +44,7 @@ namespace Isen.meziane.Library
             }
         }
 
-        public void RemoveChildNode(Node<T> node)
+        public void RemoveChildNote(Node<T> node)
         {
             var i = 0;
             foreach (var child in this.Children)
@@ -55,6 +57,43 @@ namespace Isen.meziane.Library
                 i++;
             }
         }
+
+        public Node<T> FindTraversing(Guid id)
+        {
+            if (this.Id == id)
+            {
+                return this;
+            }        
+            foreach (var child in this.Children)
+            {
+                var result = FindTraversing(id);
+
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+            return null;
+        }
+        
+        public Node<T> FindTraversing(Node<T> node)
+        {
+            if (this.Equals(node))
+            {
+                return this;
+            }        
+            foreach (var child in this.Children)
+            {
+                var result = FindTraversing(node);
+
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+            return null;
+        }
+        
 
         
         //Rider auto-generate code
@@ -80,5 +119,6 @@ namespace Isen.meziane.Library
                 return (EqualityComparer<T>.Default.GetHashCode(value) * 397) ^ Id.GetHashCode();
             }
         }
+        //end Rider auto-generate code
     }
 }
