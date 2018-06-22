@@ -5,7 +5,7 @@ using System.Runtime.InteropServices.ComTypes;
 namespace Isen.meziane.Library
 {
     public class Node<T>
-            : INode<T> , IEquatable<Node<T>>
+            :  INode<T> , IEquatable<Node<T>>
     {
         //Rider auto-generate code
         public T value { get; set; }
