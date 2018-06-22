@@ -12,12 +12,28 @@ namespace Isen.meziane.Library
         public Guid Id { get; }
         public Node<T> Parent { get; set; }
         public List<Node<T>> Children { get; set; }
-        public int Depth { get; set; }
+        public int Depth => Parent?.Depth + 1 ?? 0;
         //end Rider auto-generate code
+
+        public Node()
+        {
+            this.value = default(T);
+            this.Id = new Guid();
+            this.Parent = null;
+            this.Children = new List<Node<T>>();
+        }
+        
+        public Node(T value)
+        {
+            this.value = value;
+            this.Id = new Guid();
+            this.Parent = null;
+            this.Children = new List<Node<T>>();
+        }
 
         public void AddChildNode(Node<T> node)
         {
-            var children = new Node<T>();
+            var children = node;
             children.Parent = this;
             Children.Add(children);
         }
@@ -93,9 +109,27 @@ namespace Isen.meziane.Library
             }
             return null;
         }
-        
 
-        
+        //Rider auto-generate override method
+        public override string ToString()
+        {
+            var text = "";
+            for (int i = 0; i < this.Depth; i++)
+            {
+                text = text + "|-";
+            }
+
+            text = text + $"{this.value} {this.Id}";
+            
+            foreach (var child in this.Children)
+            {
+                text = text + $"{Environment.NewLine}" + child.ToString();
+            }
+
+            return text;
+        }
+
+
         //Rider auto-generate code
         public bool Equals(Node<T> other)
         {

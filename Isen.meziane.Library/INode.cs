@@ -15,7 +15,7 @@ namespace Isen.meziane.Library
         
         List<Node<T>> Children { get; set; }
         
-        int Depth { get; set; }
+        int Depth { get; }
 
         void AddChildNode(Node<T> node);
 
