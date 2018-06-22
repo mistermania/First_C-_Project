@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace Isen.meziane.Library
 {
     public interface INode<T>
     {
-        /// summary
-        /// Renvoie la string Value
         T value { get; set; }
         
         Guid Id { get; }
@@ -26,6 +25,11 @@ namespace Isen.meziane.Library
 
         Node<T> FindTraversing(Guid id);
         Node<T> FindTraversing(Node<T> node);
+
+        JObject JsonSerializer();
+        void JsonDeserializer(JToken jtoken);
+        
+
     }
     
 }

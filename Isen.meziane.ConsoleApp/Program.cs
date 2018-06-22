@@ -25,6 +25,14 @@ namespace Isen.meziane.ConsoleApp
             c2.AddChildNode(c22);
             
             Console.WriteLine(racine.ToString());
+
+            var json = racine.JsonSerializer();
+            Console.WriteLine(json);
+            
+            var dejson = new Node<string>();
+            dejson.JsonDeserializer(json);
+            Console.WriteLine(dejson);
+
         }
     }
 }

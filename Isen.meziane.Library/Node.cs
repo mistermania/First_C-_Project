@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
+using Newtonsoft.Json.Linq;
 
 namespace Isen.meziane.Library
 {
@@ -15,6 +16,7 @@ namespace Isen.meziane.Library
         public int Depth => Parent?.Depth + 1 ?? 0;
         //end Rider auto-generate code
 
+        //Rider auto-generate code
         public Node()
         {
             this.value = default(T);
@@ -22,7 +24,9 @@ namespace Isen.meziane.Library
             this.Parent = null;
             this.Children = new List<Node<T>>();
         }
+        //end Rider auto-generate code
         
+        //Même fonction, avec une value d'entrée
         public Node(T value)
         {
             this.value = value;
@@ -127,6 +131,43 @@ namespace Isen.meziane.Library
             }
 
             return text;
+        }
+        //end Rider auto-generate override method
+
+
+        public JObject JsonSerializer()
+        {
+            JObject objetJson = new JObject();
+            
+            objetJson.Add(new JProperty("value", this.value));
+
+            JArray childs = new JArray();
+            
+            if (this.Children.Count != 0 && this.Children != null)
+            {
+                foreach (var child in this.Children)
+                {
+                    if (child.Children.Count != 0 && child.Children != null)
+                    {
+                        childs.Add(child.JsonSerializer());
+                    }
+                }
+            }
+            objetJson.Add(new JProperty("children", childs));
+
+            return objetJson;
+        }
+
+        public void JsonDeserializer(JToken jtoken)
+        {
+            this.value = jtoken["value"].ToObject<T>();
+
+            foreach (var child in jtoken["children"])
+            {
+                Node<T> nodeChild = new Node<T>();
+                nodeChild.JsonDeserializer(child);
+                this.AddChildNode(nodeChild);
+            }
         }
 
 
